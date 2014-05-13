@@ -76,7 +76,7 @@ a {
   padding-top: 10px;
   width: 544px;
   height:144px;
-  overflow: hidden;
+  overflow: visible;
   background: url(../images/logo_alenkajdbc.png) no-repeat bottom left;
 }
 
