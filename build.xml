@@ -1,0 +1,48 @@
+<project name="Alenka-JDBC" default="package" basedir=".">
+	<property name="lib.dir" value="${basedir}/lib" />
+	<property name="src.dir" value="${basedir}/src" />
+	<property name="build.dir" value="${basedir}/build" />
+	<property name="target.dir" value="${basedir}/target" />
+	
+	<property name="jar.file" value="alenkajdbc.jar" />
+	
+	<!-- Create a pattern set which will include the files that we will need
+         to compile the project
+    -->
+	<patternset id="build.jars">
+		<include name="lib/*.jar" />
+	</patternset>
+
+	<fileset id="compile.classpath" dir="${basedir}">
+		<patternset refid="build.jars" />
+	</fileset>
+	
+	<target name="init">
+		<echo message="Using src directory=${src.dir}" />
+		<echo message="Using build directory=${build.dir}" />
+		<echo message="Using lib.dir directory=${lib.dir}" />
+
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${target.dir}" />
+	</target>
+
+	<!-- Clean build and target directories -->
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<delete dir="${target.dir}" />
+	</target>
+
+	<target name="compile" depends="clean,init">
+		<javac includeantruntime="false" deprecation="true" srcdir="${src.dir}" includes="com/technicacorp/**/**" destdir="${build.dir}" debug="true" debuglevel="lines,source,vars">
+			<classpath>
+				<fileset refid="compile.classpath" />
+			</classpath>
+		</javac>
+	</target>
+			
+	<target name="package" depends="compile">
+		<jar destfile="${target.dir}/${jar.file}" index="true">
+			<fileset dir="${build.dir}" includes="com/technicacorp/**/*.class" />
+		</jar>
+	</target>
+</project>
